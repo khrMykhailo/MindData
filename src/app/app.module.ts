@@ -4,6 +4,11 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import {HeaderModule} from "./core/components/header/header.module";
+import {NgxsModule} from "@ngxs/store";
+import {AppState} from "./core/state/app.state";
+import {environment} from "../environments/environment";
+import {NgxsReduxDevtoolsPluginModule} from "@ngxs/devtools-plugin";
+
 
 @NgModule({
   declarations: [
@@ -12,7 +17,13 @@ import {HeaderModule} from "./core/components/header/header.module";
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HeaderModule
+    HeaderModule,
+    NgxsModule.forRoot([AppState], {
+      developmentMode: !environment.production
+    }),
+    NgxsReduxDevtoolsPluginModule.forRoot({
+      disabled: environment.production,
+    }),
   ],
   providers: [],
   bootstrap: [AppComponent]
